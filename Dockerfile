@@ -40,7 +40,7 @@ ENV TWITTER_HASHTAG=#example \
     REDIS_WORKER_NAME=tweetpod \
     RECOMM_PROTOCOL=http \
     RECOMM_HOST=localhost \
-    RECOMM_PORT=8000 \
+    RECOMM_PORT=8000
 
 # the timezone data:
 ENV ZONEINFO /zoneinfo.zip
