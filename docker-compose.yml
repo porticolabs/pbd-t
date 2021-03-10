@@ -1,0 +1,54 @@
+version: "3.9"
+services:
+  pbd-t:
+    image: golang:1.15-alpine
+    command: [ "sleep", "infinity"]
+    container_name: pbd-t-local
+    environment:
+      LOG_LEVEL: "DEBUG"
+      CONSUMER_KEY: "${CONSUMER_KEY}"
+      CONSUMER_SECRET: "${CONSUMER_SECRET}"
+      ACCESS_TOKEN: "${ACCESS_TOKEN}"
+      ACCESS_TOKEN_SECRET: "${ACCESS_TOKEN_SECRET}"
+      TWITTER_SAMPLE: "true"
+      REDIS_HOST: "redis:6379"
+      REDIS_QUEUE: "RawTweets"
+      REDIS_TWEET_CONSUMERS: "3"
+      REDIS_WORKER_NAME: "localpod"
+      RECOMM_PROTOCOL: "http"
+      RECOMM_HOST: "psp-r"
+      RECOMM_PORT: "8000"
+    working_dir: /go/src
+    volumes:
+      - type: bind
+        source: ./
+        target: /go/src
+  
+  pbr-th:
+    image: porticolabs/pbr-th:master-latest
+    container_name: pbr-th-local
+    environment:
+      CONSUMER_KEY: "${CONSUMER_KEY}"
+      CONSUMER_SECRET: "${CONSUMER_SECRET}"
+      ACCESS_TOKEN: "${ACCESS_TOKEN}"
+      ACCESS_TOKEN_SECRET: "${ACCESS_TOKEN_SECRET}"
+      TWITTER_LANGUAGE: "es"
+      TWITTER_HASHTAG: "#example"
+      TWITTER_SAMPLE: "true"
+      REDIS_HOST: "redis:6379"
+      REDIS_QUEUE: "RawTweets"
+      LOG_LEVEL: "DEBUG"
+
+  psp-r:
+    image: porticolabs/psp-r:main-latest
+    container_name: psp-r-local
+    ports:
+     - "8000:8000"
+    environment:
+      LOG_LEVEL: "DEBUG"
+      PB_DB_HOST: "http://sibila.website"
+
+  redis:
+    image: "redis:alpine"
+    ports:
+     - "6379:6379"
