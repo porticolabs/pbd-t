@@ -17,3 +17,4 @@
 .env
 app
 !cmd/app
+**/.DS_Store
