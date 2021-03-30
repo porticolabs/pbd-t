@@ -79,8 +79,8 @@ func main() {
     log.Infof(" * Commit Hash: %s", sha1ver)
     log.Infof(" * Build Date: %s", buildTime)
 	
-	//log.Debug("Signing in to Twitter.")
-	//loginToTwitter(&twitterCreds)
+	log.Debug("Signing in to Twitter.")
+	loginToTwitter(&twitterCreds)
     
 	log.Debug("Connecting to Redis")
     loginToRedis(redisCreds) // Login into Redis service
