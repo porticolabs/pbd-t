@@ -39,7 +39,7 @@ func getRecommendation(request RecommRequest) (RecommResponse, error) {
 	if err != nil {
 		return recommendation, fmt.Errorf("Couldn't get a recommendation from the remote API. Previous Error: %v", err)
     }
-	recommendation.Fulfilled = (recommAPIResponse.StatusCode == 204)
+	recommendation.Fulfilled = (recommAPIResponse.StatusCode != 200)
 	
 	defer recommAPIResponse.Body.Close()
 
