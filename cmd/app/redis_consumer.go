@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"encoding/json"
-    "math/rand"
-
+	"math/rand"
+	
 	log "github.com/sirupsen/logrus"
 
 	"github.com/adjust/rmq/v3"
@@ -66,13 +66,13 @@ func (consumer *TweetConsumer) Consume(delivery rmq.Delivery) {
 	
 	// Get a recommendation for said request tipes
 	recommendationRequest := &RecommRequest{}
-	recommendationRequest.Tweet.ID      = tweet.IDStr 
+	recommendationRequest.Tweet.ID      = tweet.IDStr
 	recommendationRequest.Tweet.Text    = tweetText
 	recommendationRequest.Tweet.User    = tweet.User.ScreenName
 	recommendationRequest.Tweet.Request = requestTypes
 
 	recommendations, recommendationsError := generateRecommendations(*recommendationRequest)
-
+	
 	if recommendationsError != nil {
 		log.WithFields(log.Fields{
 			"tweetConsumer": consumer.name,
